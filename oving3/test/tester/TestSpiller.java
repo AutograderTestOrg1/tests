@@ -55,7 +55,7 @@ public class TestSpiller {
 		assertEquals(testspiller2.getPoengsum(), 10);
 		
 		// Sjekker at verdien er uforandret hvis input er negativ.
-		// Oppgaven ber ikke eksplisitt om exception slik LF bruker, derfor en try ... catch som ikke gjør noe
+		// Oppgaven ber ikke eksplisitt om exception slik LF bruker, derfor en try ... catch som ikke gjÃ¸r noe
 		try {
 			testspiller.setPoengsum(-5);
 		} catch (Exception e) {

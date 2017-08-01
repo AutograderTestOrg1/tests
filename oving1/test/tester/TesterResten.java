@@ -99,7 +99,7 @@ public class TesterResten {
 				//assertEquals(forventet, resultat, 0.02);
 			}
 		} catch (NoSuchElementException e) {
-			// fail("Forventet å finne 10 befolkningsverdier mellom 7 og 15 (i milliarder)!");
+			// fail("Forventet Ã¥ finne 10 befolkningsverdier mellom 7 og 15 (i milliarder)!");
 		}
 		l.info(s.toJSON());
 	}
