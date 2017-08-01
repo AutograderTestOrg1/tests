@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ import oving1.LeggSammenTall;
 
 public class TesterResten {
 	
-	public void enTestLeggSammenTall(int forventet, int ... tall) {
+	public boolean enTestLeggSammenTall(int forventet, int ... tall) {
 		// Create input
 		ByteArrayOutputStream inputgenerator = new ByteArrayOutputStream();
 		PrintStream testPrinter = new PrintStream(inputgenerator);
@@ -48,17 +49,24 @@ public class TesterResten {
 				inn.next();
 			}
 		}
-		assertEquals(forventet, sisteTall);
+		return forventet == sisteTall;
+		//assertEquals(forventet, sisteTall);
 	}
 
 	@Test
 	public void testLeggSammenTall() {
-		enTestLeggSammenTall(34, 5, 8, 6, 7, 8, 0);
-		enTestLeggSammenTall(5910, 56, 12, 5673, 23, 67, 23, 56, -1);
-		enTestLeggSammenTall(7, 3, 4, -15);
+		Logger l = Logger.getLogger(this.getClass().getName());
+		Score s = new Score("Legg sammen tall", 20, 3);
+		s.IncIf(enTestLeggSammenTall(34, 5, 8, 6, 7, 8, 0));
+		s.IncIf(enTestLeggSammenTall(5910, 56, 12, 5673, 23, 67, 23, 56, -1));
+		s.IncIf(enTestLeggSammenTall(7, 3, 4, -15));
+		l.info(s.toJSON());
 	}
 	
-	@Test public void testBefolkning() {
+	@Test 
+	public void testBefolkning() {
+		Logger l = Logger.getLogger(this.getClass().getName());
+		Score s = new Score("Test befolkning", 20, 10);
 		// Create stream for output
 		ByteArrayOutputStream outbytestream = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outbytestream));
@@ -87,11 +95,13 @@ public class TesterResten {
 					}
 				}
 				forventet *= multiplikator;
-				assertEquals(forventet, resultat, 0.02);
+				s.IncIf(forventet > resultat - 0.02 && forventet < resultat + 0.02);
+				//assertEquals(forventet, resultat, 0.02);
 			}
 		} catch (NoSuchElementException e) {
-			fail("Forventet å finne 10 befolkningsverdier mellom 7 og 15 (i milliarder)!");
+			// fail("Forventet Ã¥ finne 10 befolkningsverdier mellom 7 og 15 (i milliarder)!");
 		}
+		l.info(s.toJSON());
 	}
 
 }
